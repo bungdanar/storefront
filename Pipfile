@@ -13,6 +13,7 @@ django-filter = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
+django-templated-mail = "*"
 
 [dev-packages]
 autopep8 = "*"

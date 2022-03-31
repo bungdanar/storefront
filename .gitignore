@@ -9,3 +9,5 @@ media
 *.sql
 
 media/
+
+playground/static/images/

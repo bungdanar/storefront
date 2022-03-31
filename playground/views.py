@@ -4,6 +4,8 @@ from django.db.models import Value, F, Func, ExpressionWrapper, DecimalField
 from django.db.models.functions import Concat
 from django.db import transaction
 from django.contrib.contenttypes.models import ContentType
+from django.core.mail import send_mail, mail_admins, BadHeaderError, EmailMessage
+from templated_mail.mail import BaseEmailMessage
 from store.models import Collection, Customer, Product, OrderItem, Order
 from tags.models import TaggedItem
 
@@ -62,17 +64,31 @@ def say_hello(request):
 
     # Collection.objects.filter(pk=11).update(featured_product=1)
 
-    with transaction.atomic():
-        order = Order()
-        order.customer_id = 1
-        order.save()
+    # with transaction.atomic():
+    #     order = Order()
+    #     order.customer_id = 1
+    #     order.save()
 
-        item = OrderItem()
-        item.order = order
-        item.product_id = 1
-        item.quantity = 1
-        item.unit_price = 10
-        item.save()
+    #     item = OrderItem()
+    #     item.order = order
+    #     item.product_id = 1
+    #     item.quantity = 1
+    #     item.unit_price = 10
+    #     item.save()
+
+    try:
+        # send_mail('subject', 'message',
+        #           'info@danarbuy.com', ['bob@danarbuy.com'])
+
+        # mail_admins('subject', 'message', html_message='message')
+
+        message = BaseEmailMessage(
+            template_name='emails/hello.html',
+            context={'name': 'Bung Danar'}
+        )
+        message.send(['john@danarbuy.com'])
+    except BadHeaderError:
+        pass
 
     return render(request, 'hello.html', {
         'name': 'Bung Danar',
