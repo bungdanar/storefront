@@ -184,3 +184,7 @@ DEFAULT_FROM_EMAIL = 'from@danarbuy.com'
 ADMINS = [
     ('Admin', 'admin@domain.com')
 ]
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True if DEBUG else False,
+}
