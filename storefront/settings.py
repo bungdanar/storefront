@@ -101,7 +101,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'storefront',
-        'HOST': 'localhost',
+        'HOST': 'host.docker.internal',
         'USER': 'root',
         'PASSWORD': 'brightshield!23'
     }
