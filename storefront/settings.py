@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,7 +102,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'storefront',
-        'HOST': 'host.docker.internal',
+        'HOST': '0.0.0.0',
         'USER': 'root',
         'PASSWORD': 'brightshield!23'
     }
@@ -187,4 +188,14 @@ ADMINS = [
 
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: True if DEBUG else False,
+}
+
+CELERY_BROKER_URL = 'redis://default:redispw@localhost:55000/1'
+CELERY_BEAT_SCHEDULE = {
+    'notify_customers': {
+        'task': 'playground.tasks.notify_customers',
+        # 'schedule': crontab(day_of_week=1, hour=7, minute=30)
+        'schedule': 5,
+        'args': ['Hello Dark World']
+    }
 }
